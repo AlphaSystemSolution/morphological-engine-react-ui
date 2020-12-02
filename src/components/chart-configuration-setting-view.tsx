@@ -223,19 +223,25 @@ const ChartConfigurationSettingView: FC<Props> = ({ chartConfiguration, visibile
                         <label htmlFor="sortDirective" style={{ fontWeight: 'bold' }}>
                             <small>Sort Directive:</small>
                         </label>
-                        <Dropdown id="sortDirective" value={sortDirective} options={sortDirectiveOptions} onChange={updateDropdownOption} />
+                        <div className="p-col-12 p-md-12">
+                            <Dropdown id="sortDirective" value={sortDirective} options={sortDirectiveOptions} onChange={updateDropdownOption} />
+                        </div>
                     </div>
                     <div className="p-field-checkbox p-grid">
                         <label htmlFor="sortDirection" style={{ fontWeight: 'bold' }}>
                             <small>Sort Direction:</small>
                         </label>
-                        <Dropdown id="sortDirection" value={sortDirection} options={sortDirectionOptions} onChange={updateDropdownOption} />
+                        <div className="p-col-12 p-md-12">
+                            <Dropdown id="sortDirection" value={sortDirection} options={sortDirectionOptions} onChange={updateDropdownOption} />
+                        </div>
                     </div>
                     <div className="p-field-checkbox p-grid">
                         <label htmlFor="pageOrientation" style={{ fontWeight: 'bold' }}>
                             <small>Page Orientation:</small>
                         </label>
-                        <Dropdown id="pageOrientation" value={pageOrientation} options={pageOrientationOptions} onChange={updateDropdownOption} />
+                        <div className="p-col-12 p-md-12">
+                            <Dropdown id="pageOrientation" value={pageOrientation} options={pageOrientationOptions} onChange={updateDropdownOption} />
+                        </div>
                     </div>
                 </div>
             </div>
