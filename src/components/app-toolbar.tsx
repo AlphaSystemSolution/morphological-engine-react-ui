@@ -8,15 +8,12 @@ import { EmitterConstants } from './emitter-constants';
 import { ProjectContext } from '../store/project-store';
 import ChartConfigurationSettingView from './chart-configuration-setting-view';
 import { ChartConfiguration } from './model/chart-configuration';
-import WelcomeDialog from './welcome-dialog';
 
 const AppToolbar = () => {
     const [showSettings, setShowSettings] = useState(false);
-    const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
     let fileUploaderRef: any = useRef(null);
     const context = useContext(ProjectContext);
-    const { addProject, importProject } = context;
-    let initialValue = new ChartConfiguration();
+    const { addProject, importProject, globalConfiguration, hasGlobalConfiguration, updateGlobalConfiguration } = context;
 
     const uploadHandler = (event: any) => {
         if (event.files) {
@@ -27,14 +24,6 @@ const AppToolbar = () => {
     const handleNewProject = () => addProject();
 
     useEffect(() => {
-        const showWelcomeMessage = () => {
-            const globalConfiguration = localStorage.getItem('morphological-engine.global-configuration');
-            if (!globalConfiguration) {
-                setShowWelcomeDialog(true);
-            }
-        }
-
-        showWelcomeMessage();
         Emitter.on(EmitterConstants.PROJECT_IMPORTED, (_) => fileUploaderRef.clear());
 
         return () => {
@@ -48,9 +37,8 @@ const AppToolbar = () => {
 
     const onHideSettingsDialog = (chartConfiguration?: ChartConfiguration) => {
         setShowSettings(false);
-        console.log(JSON.stringify(chartConfiguration));
         if (chartConfiguration) {
-            initialValue = chartConfiguration;
+            updateGlobalConfiguration(chartConfiguration);
         }
     };
 
@@ -66,14 +54,10 @@ const AppToolbar = () => {
         </Fragment>
     );
 
-    const handleDialogSubmit = (fontName?: string) => {
-        console.log(`>>>> ${fontName}`);
-    }
-
     return (
         <Fragment>
-            <WelcomeDialog arabicFontName={initialValue.arabicFontFamily} visible={showWelcomeDialog} onHide={handleDialogSubmit}/>
-            <ChartConfigurationSettingView chartConfiguration={initialValue} visibile={showSettings} onHide={onHideSettingsDialog} />
+            <ChartConfigurationSettingView chartConfiguration={globalConfiguration} visibile={showSettings} showWelcomeMessage={!hasGlobalConfiguration} 
+               showOptionalFields={false} onHide={onHideSettingsDialog} />
             <div className="content-section implementation">
                 <Toolbar left={leftContents} />
             </div>
