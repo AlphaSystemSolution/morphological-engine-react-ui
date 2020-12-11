@@ -23,8 +23,8 @@ export class ProjectStore {
 
     constructor() {
         makeAutoObservable(this);
-        this.initilaizeEmptyProject(1);
         this.initializeGlobalConfiguration();
+        this.initilaizeEmptyProject(1);
     }
 
     @action private initializeGlobalConfiguration() {
@@ -32,11 +32,12 @@ export class ProjectStore {
         if (cc) {
             this.globalConfiguration = ChartConfiguration.of(cc);
             this._hasGlobalConfiguration = true;
-        } 
+        }
     }
 
-    @action private initilaizeEmptyProject(counter: number) {
+    @action private initilaizeEmptyProject = (counter: number) => {
         const project = ProjectStore.createNewProject(counter);
+        project.chartConfiguration = ChartConfiguration.of(this.globalConfiguration)
         this.projects = this.projects.push(project);
         this.activeProjectIndex = this.projects.size - 1;
         this.transientProjects += 1;
