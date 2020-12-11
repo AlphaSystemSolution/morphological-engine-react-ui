@@ -15,6 +15,8 @@ import Project from '../store/project';
 import { InputText } from 'primereact/inputtext';
 import Emitter from '../services/event-emitter';
 import { EmitterConstants } from './emitter-constants';
+import ChartConfigurationSettingView from './chart-configuration-setting-view';
+import { ChartConfiguration } from './model/chart-configuration';
 
 interface Props {
     project: Project
@@ -26,6 +28,7 @@ const InputTable: FC<Props> = ({ project }) => {
     const [showRowEditDialog, setShowRowEditDialog] = useState(false);
     const [showDeleteRowsDialog, setShowDeleteRowsDialog] = useState(false);
     const [showSaveDialog, setShowSaveDialog] = useState(false);
+    const [showSettingsDialog, setShowSettingsDialig] = useState(false);
     const data: InputData[] = project.data.toArray();
 
     const rowsSelected = (e: any) => setSelectedRows(e.value)
@@ -128,6 +131,17 @@ const InputTable: FC<Props> = ({ project }) => {
         }
     };
 
+    const showSettings = () => {
+        setShowSettingsDialig(true);
+    }
+
+    const handleSettingsDialog = (chartConfiguration?: ChartConfiguration) => {
+        setShowSettingsDialig(false);
+        if (chartConfiguration) {
+            project.chartConfiguration = chartConfiguration;
+        }
+    };
+
     const exportToWord = (exportType: ExportType = ExportType.BOTH) => {
         project.exportToWord(exportType, selectedRows).then(() => setSelectedRows([]))
     }
@@ -170,17 +184,18 @@ const InputTable: FC<Props> = ({ project }) => {
 
     const leftToolbarContent: any = (
         <>
-            <Button label="Add Row" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={addRow} />
-            <Button label="Delete Row(s)" icon="pi pi-trash" className="p-button-danger p-mr-2" onClick={confirmDeleteSelected}
-                disabled={selectedRows.length <= 0} />
-            <Button label="Save" icon="pi pi-save" onClick={saveProject} disabled={data.length <= 0} />
+            <Button label="Add Row" icon="pi pi-plus" className="p-button-success p-button-sm" onClick={addRow} />&nbsp;
+            <Button label="Delete Row(s)" icon="pi pi-trash" className="p-button-danger p-button-sm" onClick={confirmDeleteSelected}
+                disabled={selectedRows.length <= 0} />&nbsp;
+            <Button label="Save" icon="pi pi-save" className="p-button-sm" onClick={saveProject} disabled={data.length <= 0} />
         </>
     );
 
     const rightToolbarContent: any = (
         <>
-            <SplitButton label="Export to Word" icon="pi pi-download" model={exportMenuItems} className="p-md-12" disabled={data.length <= 0}
-                onClick={() => exportToWord()} />
+            <SplitButton label="Export to Word" icon="pi pi-download" model={exportMenuItems} className="p-button-sm" disabled={data.length <= 0}
+                onClick={() => exportToWord()} />&nbsp;
+            <Button label="Settings" className="p-button-sm" icon="pi pi-cog" disabled={data.length <= 0} onClick={showSettings} />
         </>
     );
 
@@ -194,6 +209,8 @@ const InputTable: FC<Props> = ({ project }) => {
     return (
         <>
             <MorphologicalInputForm inputData={currentRow} visible={showRowEditDialog} onHide={(newData) => updateRow(newData)} />
+            <ChartConfigurationSettingView visibile={showSettingsDialog} showWelcomeMessage={false} chartConfiguration={project.chartConfiguration}
+                showOptionalFields={true} onHide={handleSettingsDialog} />
             <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
             <DataTable value={data} className="p-datatable-gridlines" style={{ 'paddingTop': '0', 'paddingBottom': '0' }} selection={selectedRows}
                 onSelectionChange={rowsSelected}>
