@@ -24,7 +24,7 @@ export class ProjectStore {
     constructor() {
         makeAutoObservable(this);
         this.initializeGlobalConfiguration();
-        this.initilaizeEmptyProject(1);
+        this.initilaizeEmptyProject();
     }
 
     @action private initializeGlobalConfiguration() {
@@ -35,17 +35,16 @@ export class ProjectStore {
         }
     }
 
-    @action private initilaizeEmptyProject = (counter: number) => {
-        const project = ProjectStore.createNewProject(counter);
+    @action private initilaizeEmptyProject = () => {
+        this.transientProjects += 1;
+        const project = ProjectStore.createNewProject(this.transientProjects);
         project.chartConfiguration = ChartConfiguration.of(this.globalConfiguration)
         this.projects = this.projects.push(project);
         this.activeProjectIndex = this.projects.size - 1;
-        this.transientProjects += 1;
     }
 
     @action addProject = () => {
-        this.transientProjects += 1;
-        this.initilaizeEmptyProject(this.transientProjects);
+        this.initilaizeEmptyProject();
     }
 
     @action importProject = (file: any) => {
