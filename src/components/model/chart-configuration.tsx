@@ -8,7 +8,9 @@ export class PageOption {
     constructor(public orientation: string = PageOrientation.PORTRAIT) { }
 
     public static of(src?: any): PageOption {
-        return src ? new PageOption(src.orientation) : new PageOption()
+        // can we do better?
+        const orientation = src && src.orientation === 'PORTRAIT' ? PageOrientation.PORTRAIT : PageOrientation.LANDSCAPE;
+        return new PageOption(orientation); 
     }
 }
 
