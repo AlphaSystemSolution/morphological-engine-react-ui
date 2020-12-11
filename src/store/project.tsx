@@ -1,5 +1,5 @@
 import { List } from 'immutable';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { v4 as uuid } from 'uuid';
 import { ChartConfiguration } from '../components/model/chart-configuration';
 import { ConjugationTemplate } from '../components/model/conjugation-template';
@@ -76,6 +76,10 @@ export default class Project {
 
     @action saveProject = () => {
         this.applicationController.saveFile(this.projectName, this.data, this.chartConfiguration);
+    }
+
+    @computed get empty(): boolean {
+        return this.data.isEmpty();
     }
 
     exportToWord = (exportType: ExportType = ExportType.BOTH, selectedData: InputData[] = []) => {

@@ -53,9 +53,20 @@ export class ProjectStore {
         fileReader.onload = () => {
             const content = JSON.parse(fileReader.result as string);
             const data = content.data.map((src: any) => InputData.of(src));
-            const project = new Project(content.projectName, false, ChartConfiguration.of(content.configuration), List(data));
+            const chartConfiguration = ChartConfiguration.of(content.configuration);
+            const project = new Project(content.projectName, false, chartConfiguration, List(data));
+
+            // at the start up we added an empty project, if that is the only project and hasn't been updated,
+            // then replace it with imported project
+            if (this.size === 1) {
+                const currentProject = this.projects.get(0)!;
+                if(currentProject.transient && currentProject.empty) {
+                    this.projects = List();
+                    this.transientProjects -= 1;
+                }
+            }
             this.projects = this.projects.push(project);
-            this.activeProjectIndex = this.projects.size - 1;
+            this.activeProjectIndex = this.size - 1;
             Emitter.emit(EmitterConstants.PROJECT_IMPORTED, this.size - 1);
         }
         fileReader.onerror = () => {
