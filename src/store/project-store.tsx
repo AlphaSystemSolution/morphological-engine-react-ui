@@ -60,7 +60,7 @@ export class ProjectStore {
             // then replace it with imported project
             if (this.size === 1) {
                 const currentProject = this.projects.get(0)!;
-                if(currentProject.transient && currentProject.empty) {
+                if (currentProject.transient && currentProject.empty) {
                     this.projects = List();
                     this.transientProjects -= 1;
                 }
@@ -83,6 +83,10 @@ export class ProjectStore {
         this.globalConfiguration = src;
         this._hasGlobalConfiguration = true;
         localStorage.setItem(ProjectStore.GLOBAL_CONFIGURATION_KEY, JSON.stringify(this.globalConfiguration))
+    }
+
+    @action closeProject = (projectId: string) => {
+        this.projects = this.projects.filterNot((project) => project.id === projectId);
     }
 
     @computed getProject(id: string): Project {

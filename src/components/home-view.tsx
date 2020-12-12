@@ -9,16 +9,18 @@ import { EmitterConstants } from './emitter-constants';
 const HomeView = () => {
     const [refreshTab, setRefreshTab] = useState(false);
     const context = useContext(ProjectContext);
-    const { projects, activeProjectIndex, setActiveProjectIndex } = context;
+    const { projects, activeProjectIndex, setActiveProjectIndex, closeProject } = context;
 
     useEffect(() => {
         // after save tab title doesn't get refreshed automatically,
         // this is just to refresh tab title
         Emitter.on(EmitterConstants.PROJECT_SAVED, () => setRefreshTab(!refreshTab));
+        Emitter.on(EmitterConstants.CLOSE_PROJECT, (projectId: string) => closeProject(projectId))
         return () => {
             Emitter.off(EmitterConstants.PROJECT_SAVED);
+            Emitter.off(EmitterConstants.CLOSE_PROJECT);
         }
-    }, [refreshTab]);
+    }, [refreshTab, closeProject]);
 
     return (
         <TabView activeIndex={activeProjectIndex} onTabChange={(e) => setActiveProjectIndex(e.index)}>
