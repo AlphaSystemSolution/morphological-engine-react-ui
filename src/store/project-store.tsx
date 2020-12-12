@@ -76,6 +76,9 @@ export class ProjectStore {
 
     @action closeProject = (projectId: string) => {
         this.projects = this.projects.filterNot((project) => project.id === projectId);
+        if (this.size > 0) {
+            this.activeProjectIndex = this.size - 1;
+        }
     }
 
     @computed getProject(id: string): Project {
