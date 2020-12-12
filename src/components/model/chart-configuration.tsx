@@ -5,12 +5,10 @@ export enum PageOrientation {
 
 export class PageOption {
 
-    constructor(public orientation: string = PageOrientation.PORTRAIT) { }
+    constructor(public orientation: PageOrientation = PageOrientation.PORTRAIT) { }
 
     public static of(src?: any): PageOption {
-        // can we do better?
-        const orientation = src && src.orientation === 'PORTRAIT' ? PageOrientation.PORTRAIT : PageOrientation.LANDSCAPE;
-        return new PageOption(orientation); 
+        return src ? new PageOption(src.orientation) : new PageOption();; 
     }
 }
 

@@ -1,5 +1,5 @@
 import { FC, useRef, useState } from 'react';
-import { ChartConfiguration, PageOption } from './model/chart-configuration';
+import { ChartConfiguration, PageOption, PageOrientation } from './model/chart-configuration';
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
@@ -211,7 +211,7 @@ const ChartConfigurationSettingView: FC<Props> = ({ chartConfiguration, visibile
 
         const sortDirectiveOptions = ['NONE', 'TYPE', 'ALPHABATICAL'];
         const sortDirectionOptions = ['ASCENDING', 'DESCENDING'];
-        const pageOrientationOptions = ['PORTRAIT', 'LANDSCAPE'];
+        const pageOrientationOptions = [PageOrientation.PORTRAIT, PageOrientation.LANDSCAPE];
         return (
             <>
                 <div className="p-formgroup-inline">
