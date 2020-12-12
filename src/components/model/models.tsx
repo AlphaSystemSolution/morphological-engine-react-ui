@@ -68,6 +68,7 @@ export class ArabicConstants {
   static ADVERBS_PREFIX = new ArabicLabel('ADVERBS_PREFIX', 'والظرف منه', 'Adverbs prefix');
   static ABBREVIATED_CONJUGATION_LABEL = new ArabicLabel('ABBREVIATED_CONJUGATION', 'صرف صغير', 'Abbreviated Conjugation');
   static DETAIL_CONJUGATION_LABEL = new ArabicLabel('DETAIL_CONJUGATION', 'صرف كبير', 'Detail Conjugation');
+  static CONJUGATION_LABEL = new ArabicLabel('CONJUGATION', 'صرف', 'Conjugation');
   static AND = new ArabicLabel('AND', 'و', 'AND');
   static AND_SPACE = new ArabicLabel('AND_SPACE', ' و ', 'AND_SPACE');
 }

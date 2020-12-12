@@ -1,13 +1,16 @@
 export enum PageOrientation {
-    PORTRAIT, LANDSCAPE
+    PORTRAIT = 'PORTRAIT',
+    LANDSCAPE = 'LANDSCAPE'
 }
 
 export class PageOption {
 
-    constructor(public orientation: string = PageOrientation[PageOrientation.PORTRAIT]) { }
+    constructor(public orientation: string = PageOrientation.PORTRAIT) { }
 
     public static of(src?: any): PageOption {
-        return src ? new PageOption(PageOrientation[src.orientation]) : new PageOption()
+        // can we do better?
+        const orientation = src && src.orientation === 'PORTRAIT' ? PageOrientation.PORTRAIT : PageOrientation.LANDSCAPE;
+        return new PageOption(orientation); 
     }
 }
 
@@ -18,7 +21,7 @@ export class ChartConfiguration {
         public omitAbbreviatedConjugation = false,
         public omitDetailedConjugation = false,
         public omitTitle = false,
-        public omitHeader = false,
+        public omitHeader = true,
         public omitSarfTermCaption = false,
         public sortDirective = 'NONE',
         public sortDirection = 'ASCENDING',

@@ -15,6 +15,9 @@ import Project from '../store/project';
 import { InputText } from 'primereact/inputtext';
 import Emitter from '../services/event-emitter';
 import { EmitterConstants } from './emitter-constants';
+import ChartConfigurationSettingView from './chart-configuration-setting-view';
+import { ChartConfiguration } from './model/chart-configuration';
+import '../assets/data-table.css';
 
 interface Props {
     project: Project
@@ -26,6 +29,7 @@ const InputTable: FC<Props> = ({ project }) => {
     const [showRowEditDialog, setShowRowEditDialog] = useState(false);
     const [showDeleteRowsDialog, setShowDeleteRowsDialog] = useState(false);
     const [showSaveDialog, setShowSaveDialog] = useState(false);
+    const [showSettingsDialog, setShowSettingsDialig] = useState(false);
     const data: InputData[] = project.data.toArray();
 
     const rowsSelected = (e: any) => setSelectedRows(e.value)
@@ -108,6 +112,7 @@ const InputTable: FC<Props> = ({ project }) => {
     };
 
     const hideDeleteRowsDialog = () => {
+        setSelectedRows([]);
         setShowDeleteRowsDialog(false);
     };
 
@@ -125,6 +130,17 @@ const InputTable: FC<Props> = ({ project }) => {
             project.updateProjectName(projectName);
             project.saveProject();
             Emitter.emit(EmitterConstants.PROJECT_SAVED, {});
+        }
+    };
+
+    const showSettings = () => {
+        setShowSettingsDialig(true);
+    }
+
+    const handleSettingsDialog = (chartConfiguration?: ChartConfiguration) => {
+        setShowSettingsDialig(false);
+        if (chartConfiguration) {
+            project.chartConfiguration = chartConfiguration;
         }
     };
 
@@ -170,17 +186,18 @@ const InputTable: FC<Props> = ({ project }) => {
 
     const leftToolbarContent: any = (
         <>
-            <Button label="Add Row" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={addRow} />
-            <Button label="Delete Row(s)" icon="pi pi-trash" className="p-button-danger p-mr-2" onClick={confirmDeleteSelected}
-                disabled={selectedRows.length <= 0} />
-            <Button label="Save" icon="pi pi-save" onClick={saveProject} disabled={data.length <= 0} />
+            <Button label="Add Row" icon="pi pi-plus" className="p-button-success p-button-sm" onClick={addRow} />&nbsp;
+            <Button label="Delete Row(s)" icon="pi pi-trash" className="p-button-danger p-button-sm" onClick={confirmDeleteSelected}
+                disabled={selectedRows.length <= 0} />&nbsp;
+            <Button label="Save" icon="pi pi-save" className="p-button-sm" onClick={saveProject} disabled={data.length <= 0} />
         </>
     );
 
     const rightToolbarContent: any = (
         <>
-            <SplitButton label="Export to Word" icon="pi pi-download" model={exportMenuItems} className="p-md-12" disabled={data.length <= 0}
-                onClick={() => exportToWord()} />
+            <SplitButton label="Export to Word" icon="pi pi-download" model={exportMenuItems} className="p-button-sm" disabled={data.length <= 0}
+                onClick={() => exportToWord()} />&nbsp;
+            <Button label="Settings" className="p-button-sm" icon="pi pi-cog" disabled={data.length <= 0} onClick={showSettings} />
         </>
     );
 
@@ -194,19 +211,28 @@ const InputTable: FC<Props> = ({ project }) => {
     return (
         <>
             <MorphologicalInputForm inputData={currentRow} visible={showRowEditDialog} onHide={(newData) => updateRow(newData)} />
-            <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
-            <DataTable value={data} className="p-datatable-gridlines" style={{ 'paddingTop': '0', 'paddingBottom': '0' }} selection={selectedRows}
-                onSelectionChange={rowsSelected}>
-                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="rootLetters" body={rootLettersTemplate} header="Root Letters" />
-                <Column field="family" body={familyTemplate} header="Family" />
-                <Column field="translation" header="Translation" />
-                <Column field="verbalNouns" header="Verbal Nouns" body={verbalNounsTemplate} />
-                <Column field="removePassiveLine" body={removePassiveLineTemplate} header="Remove Passive Line" style={{ width: '10%' }} />
-                <Column field="skipRuleProcessing" body={skipRuleProcessingTemplate} header="Skip Rule Processing" style={{ width: '10%' }} />
-                <Column body={actionBodyTemplate} headerStyle={{ width: '10em', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
-            </DataTable>
-            <Dialog visible={showDeleteRowsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteRowsDialogFooter} onHide={hideDeleteRowsDialog}>
+            <ChartConfigurationSettingView visibile={showSettingsDialog} showWelcomeMessage={false} chartConfiguration={project.chartConfiguration}
+                showOptionalFields={true} onHide={handleSettingsDialog} />
+            <div className="datatable-responsive">
+                <div className="card">
+                    <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
+                    <DataTable value={data} className="p-datatable-gridlines p-datatable-responsive" style={{ 'paddingTop': '0', 'paddingBottom': '0' }} selection={selectedRows}
+                        onSelectionChange={rowsSelected} paginator
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" rows={10} rowsPerPageOptions={[10, 20, 50]}>
+                        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+                        <Column field="rootLetters" body={rootLettersTemplate} header="Root Letters" />
+                        <Column field="family" body={familyTemplate} header="Family" />
+                        <Column field="translation" header="Translation" />
+                        <Column field="verbalNouns" header="Verbal Nouns" body={verbalNounsTemplate} />
+                        <Column field="removePassiveLine" body={removePassiveLineTemplate} header="Remove Passive Line" style={{ width: '10%' }} />
+                        <Column field="skipRuleProcessing" body={skipRuleProcessingTemplate} header="Skip Rule Processing" style={{ width: '10%' }} />
+                        <Column body={actionBodyTemplate} headerStyle={{ width: '10em', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
+                    </DataTable>
+                    <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
+                </div>
+            </div>
+            <Dialog visible={showDeleteRowsDialog} style={{ width: '30vw' }} header="Confirm" modal footer={deleteRowsDialogFooter} onHide={hideDeleteRowsDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem' }} />
                     {<span>Are you sure you want to delete the selected rows?</span>}
