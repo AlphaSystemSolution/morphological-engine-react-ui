@@ -9,7 +9,7 @@ import { EmitterConstants } from './emitter-constants';
 const HomeView = () => {
     const [refreshTab, setRefreshTab] = useState(false);
     const context = useContext(ProjectContext);
-    const { projects, activeProjectIndex, setActiveProjectIndex, closeProject } = context;
+    const { projects, size, activeProjectIndex, setActiveProjectIndex, closeProject } = context;
 
     useEffect(() => {
         // after save tab title doesn't get refreshed automatically,
@@ -22,19 +22,31 @@ const HomeView = () => {
         }
     }, [refreshTab, closeProject]);
 
-    return (
-        <TabView activeIndex={activeProjectIndex} onTabChange={(e) => setActiveProjectIndex(e.index)}>
-            {
-              projects.map((project) => {
-                return (
-                    <TabPanel header={project.projectName} key={project.id}>
-                        <ProjectView project={project} />
-                    </TabPanel>
-                );
-            })  
-            }
-        </TabView>
-    );
+    const view = () => {
+        if (size <= 0) {
+            return (
+                <div>
+                    <h3>Create or Import project</h3>
+                </div>
+            )
+        } else {
+            return (
+                <TabView activeIndex={activeProjectIndex} onTabChange={(e) => setActiveProjectIndex(e.index)}>
+                    {
+                        projects.map((project) => {
+                            return (
+                                <TabPanel header={project.projectName} key={project.id}>
+                                    <ProjectView project={project} />
+                                </TabPanel>
+                            );
+                        })
+                    }
+                </TabView>
+            )
+        }
+    }
+
+    return view();
 };
 
 export default observer(HomeView);
