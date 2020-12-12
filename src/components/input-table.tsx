@@ -201,7 +201,7 @@ const InputTable: FC<Props> = ({ project }) => {
         <>
             <SplitButton label="Export to Word" icon="pi pi-download" model={exportMenuItems} className="p-button-sm" disabled={data.length <= 0}
                 onClick={() => exportToWord()} />&nbsp;
-            <Button label="Settings" className="p-button-sm" icon="pi pi-cog" disabled={data.length <= 0} onClick={showSettings} tooltip="Show Settings" />&nbsp;
+            <Button label="Settings" className="p-button-sm" icon="pi pi-cog" onClick={showSettings} tooltip="Show Settings" />&nbsp;
             <Button label="Close" className="p-button-sm" icon="pi pi-times-circle" tooltip="Close Tab" onClick={closeProject} />
         </>
     );
