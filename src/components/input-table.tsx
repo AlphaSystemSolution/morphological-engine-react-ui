@@ -17,6 +17,7 @@ import Emitter from '../services/event-emitter';
 import { EmitterConstants } from './emitter-constants';
 import ChartConfigurationSettingView from './chart-configuration-setting-view';
 import { ChartConfiguration } from './model/chart-configuration';
+import '../assets/data-table.css';
 
 interface Props {
     project: Project
@@ -212,21 +213,25 @@ const InputTable: FC<Props> = ({ project }) => {
             <MorphologicalInputForm inputData={currentRow} visible={showRowEditDialog} onHide={(newData) => updateRow(newData)} />
             <ChartConfigurationSettingView visibile={showSettingsDialog} showWelcomeMessage={false} chartConfiguration={project.chartConfiguration}
                 showOptionalFields={true} onHide={handleSettingsDialog} />
-            <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
-            <DataTable value={data} className="p-datatable-gridlines" style={{ 'paddingTop': '0', 'paddingBottom': '0' }} selection={selectedRows}
-                onSelectionChange={rowsSelected}  paginator
-                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" rows={10} rowsPerPageOptions={[10,20,50]}>
-                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="rootLetters" body={rootLettersTemplate} header="Root Letters" />
-                <Column field="family" body={familyTemplate} header="Family" />
-                <Column field="translation" header="Translation" />
-                <Column field="verbalNouns" header="Verbal Nouns" body={verbalNounsTemplate} />
-                <Column field="removePassiveLine" body={removePassiveLineTemplate} header="Remove Passive Line" style={{ width: '10%' }} />
-                <Column field="skipRuleProcessing" body={skipRuleProcessingTemplate} header="Skip Rule Processing" style={{ width: '10%' }} />
-                <Column body={actionBodyTemplate} headerStyle={{ width: '10em', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
-            </DataTable>
-            <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
+            <div className="datatable-responsive">
+                <div className="card">
+                    <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
+                    <DataTable value={data} className="p-datatable-gridlines p-datatable-responsive" style={{ 'paddingTop': '0', 'paddingBottom': '0' }} selection={selectedRows}
+                        onSelectionChange={rowsSelected} paginator
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" rows={10} rowsPerPageOptions={[10, 20, 50]}>
+                        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+                        <Column field="rootLetters" body={rootLettersTemplate} header="Root Letters" />
+                        <Column field="family" body={familyTemplate} header="Family" />
+                        <Column field="translation" header="Translation" />
+                        <Column field="verbalNouns" header="Verbal Nouns" body={verbalNounsTemplate} />
+                        <Column field="removePassiveLine" body={removePassiveLineTemplate} header="Remove Passive Line" style={{ width: '10%' }} />
+                        <Column field="skipRuleProcessing" body={skipRuleProcessingTemplate} header="Skip Rule Processing" style={{ width: '10%' }} />
+                        <Column body={actionBodyTemplate} headerStyle={{ width: '10em', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
+                    </DataTable>
+                    <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
+                </div>
+            </div>
             <Dialog visible={showDeleteRowsDialog} style={{ width: '30vw' }} header="Confirm" modal footer={deleteRowsDialogFooter} onHide={hideDeleteRowsDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem' }} />
