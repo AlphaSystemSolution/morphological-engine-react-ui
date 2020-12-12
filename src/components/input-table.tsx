@@ -213,7 +213,9 @@ const InputTable: FC<Props> = ({ project }) => {
                 showOptionalFields={true} onHide={handleSettingsDialog} />
             <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
             <DataTable value={data} className="p-datatable-gridlines" style={{ 'paddingTop': '0', 'paddingBottom': '0' }} selection={selectedRows}
-                onSelectionChange={rowsSelected}>
+                onSelectionChange={rowsSelected}  paginator
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" rows={10} rowsPerPageOptions={[10,20,50]}>
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
                 <Column field="rootLetters" body={rootLettersTemplate} header="Root Letters" />
                 <Column field="family" body={familyTemplate} header="Family" />
