@@ -111,6 +111,7 @@ const InputTable: FC<Props> = ({ project }) => {
     };
 
     const hideDeleteRowsDialog = () => {
+        setSelectedRows([]);
         setShowDeleteRowsDialog(false);
     };
 
