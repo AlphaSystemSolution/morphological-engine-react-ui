@@ -9,7 +9,7 @@ import { EmitterConstants } from './emitter-constants';
 const HomeView = () => {
     const [refreshTab, setRefreshTab] = useState(false);
     const context = useContext(ProjectContext);
-    const { projects, activeProjectIndex, setActiveProjectIndex: selectProject } = context;
+    const { projects, activeProjectIndex, setActiveProjectIndex } = context;
 
     useEffect(() => {
         // after save tab title doesn't get refreshed automatically,
@@ -21,7 +21,7 @@ const HomeView = () => {
     }, [refreshTab]);
 
     return (
-        <TabView activeIndex={activeProjectIndex} onTabChange={(e) => selectProject(e.index)}>
+        <TabView activeIndex={activeProjectIndex} onTabChange={(e) => setActiveProjectIndex(e.index)}>
             {
               projects.map((project) => {
                 return (
