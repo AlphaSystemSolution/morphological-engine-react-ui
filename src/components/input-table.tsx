@@ -226,7 +226,7 @@ const InputTable: FC<Props> = ({ project }) => {
                 <Column body={actionBodyTemplate} headerStyle={{ width: '10em', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
             </DataTable>
             <Toolbar left={leftToolbarContent} right={rightToolbarContent} />
-            <Dialog visible={showDeleteRowsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteRowsDialogFooter} onHide={hideDeleteRowsDialog}>
+            <Dialog visible={showDeleteRowsDialog} style={{ width: '30vw' }} header="Confirm" modal footer={deleteRowsDialogFooter} onHide={hideDeleteRowsDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem' }} />
                     {<span>Are you sure you want to delete the selected rows?</span>}
