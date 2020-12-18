@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ConjugationTemplate } from '../components/model/conjugation-template';
-import { InputData, OutputFormat } from '../components/model/models';
+import { InputData } from '../components/model/input-data';
+import { OutputFormat } from '../components/model/models';
 import { MorphologicalChart } from '../components/model/morphological-chart';
 import FileSaver from 'file-saver';
 import { ChartConfiguration } from '../components/model/chart-configuration';
@@ -32,6 +33,6 @@ export class ApplicationController {
 
     public saveFile(projectName: string, inputDatas: List<InputData>, configuration: ChartConfiguration) {
         const fileName = `${projectName}.json`;
-        FileSaver.saveAs(new Blob([JSON.stringify({projectName: projectName, data: inputDatas, configuration: configuration})]), fileName);
+        FileSaver.saveAs(new Blob([JSON.stringify({ projectName: projectName, data: inputDatas, configuration: configuration })]), fileName);
     }
 }

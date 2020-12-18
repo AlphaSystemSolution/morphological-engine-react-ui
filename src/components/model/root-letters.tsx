@@ -1,11 +1,11 @@
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { ArabicLetter } from './arabic-letter';
 import { RootLetters as _RootLetters } from './conjugation-header';
 
 export class RootLetters {
 
   public static of(src: any): RootLetters {
-    return new RootLetters (
+    return new RootLetters(
       ArabicLetter.of(src.firstRadical),
       ArabicLetter.of(src.secondRadical),
       ArabicLetter.of(src.thirdRadical),
@@ -15,8 +15,12 @@ export class RootLetters {
 
   public id: string = uuid();
 
-  constructor(public firstRadical: ArabicLetter = ArabicLetter.FA, public secondRadical: ArabicLetter = ArabicLetter.AIN,
-    public thirdRadical: ArabicLetter = ArabicLetter.LAM, public fourthRadical: ArabicLetter = ArabicLetter.TATWEEL) { }
+  constructor(
+    public firstRadical: ArabicLetter = ArabicLetter.FA,
+    public secondRadical: ArabicLetter = ArabicLetter.AIN,
+    public thirdRadical: ArabicLetter = ArabicLetter.LAM,
+    public fourthRadical: ArabicLetter = ArabicLetter.TATWEEL
+  ) { }
 
   get empty(): boolean {
     return this.firstRadical === null || this.secondRadical === null || this.thirdRadical === null;

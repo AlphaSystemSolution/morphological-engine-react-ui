@@ -3,7 +3,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx";
 import { createContext } from 'react';
 import { EmitterConstants } from '../components/emitter-constants';
 import { ChartConfiguration } from '../components/model/chart-configuration';
-import { InputData } from '../components/model/models';
+import { InputData } from '../components/model/input-data';
 import Emitter from '../services/event-emitter';
 import Project from './project';
 

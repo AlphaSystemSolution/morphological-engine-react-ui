@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { ArabicConstants, ExportType, InputData } from './model/models';
+import { ArabicConstants, ExportType } from './model/models';
+import { InputData } from './model/input-data';
 import { Checkbox } from 'primereact/checkbox';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';

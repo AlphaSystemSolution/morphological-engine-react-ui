@@ -5,7 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Chips } from 'primereact/chips';
 import ArabicKeyboard from './arabic-keyboard';
-import { InputData } from './model/models';
+import { InputData } from './model/input-data';
 import { RootLetters } from './model/root-letters';
 import { NamedTemplate } from './model/named-template';
 import { Checkbox } from 'primereact/checkbox';

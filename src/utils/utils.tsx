@@ -1,5 +1,5 @@
 import { ArabicLetter } from "../components/model/arabic-letter";
-import { InputData } from "../components/model/models";
+import { InputData } from "../components/model/input-data";
 
 export class Utils {
 

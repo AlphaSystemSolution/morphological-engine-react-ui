@@ -1,4 +1,5 @@
-import { ConjugationConfiguration, InputData } from './models';
+import { InputData } from './input-data';
+import { ConjugationConfiguration } from './models';
 import { Document } from './document';
 import { RootLetters } from './conjugation-header';
 import { NamedTemplate } from './named-template';

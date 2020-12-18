@@ -3,7 +3,8 @@ import { action, computed, observable } from 'mobx';
 import { v4 as uuid } from 'uuid';
 import { ChartConfiguration } from '../components/model/chart-configuration';
 import { ConjugationTemplate } from '../components/model/conjugation-template';
-import { ExportType, InputData } from '../components/model/models';
+import { InputData } from '../components/model/input-data';
+import { ExportType } from '../components/model/models';
 import { MorphologicalChart } from '../components/model/morphological-chart';
 import { ApplicationController } from '../services/application-controller';
 
