@@ -1,7 +1,10 @@
 import { ArabicLetter } from "../components/model/arabic-letter";
 import { InputData } from "../components/model/input-data";
+import { v5 as uuidv5 } from 'uuid';
 
 export class Utils {
+
+    private static NAME_SPACE = '1b9c4e9a-e192-42d2-ae28-10685091ed00';
 
     public static copyArray(array: any[]) {
         return array.map(x => Object.assign({}, x));
@@ -31,5 +34,9 @@ export class Utils {
         }
         const url = process.env.REACT_APP_DICTIONARY_URL + searchString;
         window.open(url, '_dictionary');
+    }
+
+    public static toUUID(str: string) {
+        return uuidv5(str, Utils.NAME_SPACE);
     }
 }

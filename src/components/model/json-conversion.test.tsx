@@ -5,6 +5,7 @@ import { ChartMode } from './conjugation-header';
 import { ConjugationTuple, NounConjugationGroup } from './detailed-conjugation';
 import { NamedTemplate } from './named-template';
 import { SarfTermType } from './sarf-term-type';
+import { RootLetters } from './root-letters';
 
 const chartMode = {
     "template": "FORM_I_CATEGORY_A_GROUP_U_TEMPLATE",
@@ -108,4 +109,14 @@ test('slice array', () => {
     const result = Utils.chunkArray(array, 3);
     console.log(result.length)
     console.log(result);
+});
+
+test('UUID test', () => {
+    const rootLetters = new RootLetters();
+    const family = NamedTemplate.FORM_I_CATEGORY_A_GROUP_U_TEMPLATE;
+    const key = `${rootLetters.firstRadical.name}_${rootLetters.secondRadical.name}_${rootLetters.thirdRadical.name}_${rootLetters.fourthRadical.name}_${family.name}`;
+    const first = Utils.toUUID(key);
+    const second = Utils.toUUID(key);
+    console.log(`First: ${first}, Second: ${second}`);
+    first === second
 });
